@@ -18,6 +18,7 @@ print(fila_espera.quantidade_fila())
 print(atendidos.quantidade_fila())
 
 while fila_espera.quantidade_fila() >0:
+    print("Hora: 20:{:02d}".format(tempo))
     tempo += 1
     if tempo > 10:
         contador_servir += 1
