@@ -3,33 +3,50 @@ from random import random
 from fila import Fila
 from morador import Morador
 
-tempo_servir = 98 % 3 + 1
+# calculo do tempo para servir baseado no RM
+tempo_servir = 96 % 3 + 1
+# randomizamos os moradores do inicio da fila
 moradores_inicio_fila = int(random() * 14) + 1
 agora = time.gmtime()[4]
 tempo = 0
 contador_servir = 0
 
+# Criamos a fila de espera e a fila de atendidos
 fila_espera = Fila(True)
 atendidos = Fila(False)
+# Enfileiramos os primeiros da fila
 fila_espera.fila_inicial(tempo, moradores_inicio_fila)
 
-print(moradores_inicio_fila)
-print(fila_espera.quantidade_fila())
-print(atendidos.quantidade_fila())
+# Printamos a hora atual para acompanhar
+print("Hora: 20:{:02d}".format(tempo))
+# Printamos a quantidade de moradores na fila e quantos foram atendidos
+print("Estão na fila {} moradores, foram atendidos {}".format(fila_espera.quantidade_fila(),
+                                                              atendidos.quantidade_fila()))
+# Printamos quanto demorou cada morador para ser atendido, caso ainda não tenha sido atendido, informamos isso
+if atendidos.quantidade_fila() == 0:
+    print("Ainda não foi atendido nenhum morador")
+else:
+    print("O tempo de espera de cada morador atendido foi de {}minutos".format(atendidos.tempo_atendimento()))
 
-while fila_espera.quantidade_fila() >0:
-    print("Hora: 20:{:02d}".format(tempo))
+# Definimos como loop o while até a fila a ser atendida ser zerada
+while fila_espera.quantidade_fila() > 0:
+    # Adicionamos ao tempo o valor de 1
     tempo += 1
+    # se o tempo for maior que 10, iniciamos os atendimentos
     if tempo > 10:
+        # este contador serve para definir o tempo apara o atendimento
         contador_servir += 1
+        # caso o contador seja maior que o tempo definido pelo RM, façamos os atendimentos
         if contador_servir >= tempo_servir:
             contador_servir = 0
+            # Os pratos a serem atendidos são 3 por vez, exceto quando a fila estiver menor que 3
             pratos_servidos = 3
             if fila_espera.quantidade_fila() < 3:
                 pratos_servidos = fila_espera.quantidade_fila()
             for i in range(pratos_servidos):
                 atendido = fila_espera.servir_morador(tempo)
                 atendidos.enfileirar(atendido)
+            # Se a fila estiver maior que 10, o auxiliar ira fazer os atendimentos também
             if fila_espera.quantidade_fila() > 10:
                 pratos_servidos = 3
                 if fila_espera.quantidade_fila() < 3:
@@ -37,15 +54,21 @@ while fila_espera.quantidade_fila() >0:
                 for i in range(pratos_servidos):
                     atendido = fila_espera.servir_morador(tempo)
                     atendidos.enfileirar(atendido)
+    # A cada 2 minutos, um morador entra na fila
     if tempo % 2 == 0:
         novo_morador = Morador(tempo)
         fila_espera.enfileirar(novo_morador)
+    # Printamos a hora atual para acompanhar
+    print("Hora: 20:{:02d}".format(tempo))
+    # Printamos a quantidade de moradores na fila e quantos foram atendidos
     print("Estão na fila {} moradores, foram atendidos {}".format(fila_espera.quantidade_fila(),
-                                                                  atendidos.quantidade_fila()))
+                                             atendidos.quantidade_fila()))
+    # Printamos quanto demorou cada morador para ser atendido, caso ainda não tenha sido atendido, informamos isso
     if atendidos.quantidade_fila() == 0:
         print("Ainda não foi atendido nenhum morador")
     else:
-        print("O tempo de espera de cada morador atendido foi de {} minutos".format(atendidos.tempo_atendimento()))
+        print("O tempo de espera de cada morador atendido foi de {}minutos".format(atendidos.tempo_atendimento()))
+
 
 
 
