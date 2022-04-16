@@ -6,6 +6,8 @@ class Morador:
         self.atendido = False
         self.tempo_espera = 0
 
+    # Função para calcular o tempo de espera calculado entre o tempo atual e a hora_entrada
+    # define o boolean atendido com true
     def foi_atendido(self, tempo_agora):
         self.atendido = True
         self.tempo_espera = tempo_agora - self.hora_entrada
