@@ -43,6 +43,12 @@ class Fila:
             nodo.morador.foi_atendido(hora_atendida)
             return nodo.morador
 
+    def sair_da_fila(self):
+        if not self.fila_vazia():
+            nodo = self.inicio
+            self.inicio = nodo.seguinte
+            return nodo.morador
+
     # função para selecionar um morador da fila
     def escolher_morador(self, index):
         i = 0
