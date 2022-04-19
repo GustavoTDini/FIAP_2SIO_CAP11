@@ -129,6 +129,7 @@ class GUIData:
         self.frame_fila_atendidos.grid_propagate(False)
 
         # Controle de Variáveis
+        ttk.Label(frm, text="Segundos:").grid(column=0, row=5)
         ttk.Entry(frm, textvariable=segundo).grid(column=0, row=6)
         ttk.Label(frm, text="Máximo da fila:").grid(column=2, row=5)
         ttk.Entry(frm, textvariable=max_fila).grid(column=2, row=6)

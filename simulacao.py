@@ -98,10 +98,10 @@ def simular_fila(rm, max_fila, segundo, minimo_para_auxiliar, data):
                     # caso o contador seja maior que o tempo definido pelo RM, façamos os atendimentos
                     if contador_servir >= tempo_servir:
                         contador_servir = 0
-                        servir_pratos()
                         # Se a fila estiver maior que 10, o auxiliar ira fazer os atendimentos também
                         if fila_espera.quantidade_fila() > minimo_para_auxiliar:
                             servir_pratos()
+                        servir_pratos()
                 # Printamos as informações atualizadas
                 printar_info(tempo, fila_espera, em_atendimento, atendidos)
                 data.update(tempo, fila_espera, em_atendimento, atendidos)
